@@ -14,14 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Stylesheet1.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Stylesheet1.css" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Xhm.CPF" Version="0.9.6.*" />
     <PackageReference Include="Xhm.CPF.Windows" Version="0.9.6.*" />
   </ItemGroup>
@@ -29,6 +21,9 @@
     <PackageReference Include="Xhm.CPF.Skia" Version="0.9.6.*" />
     <PackageReference Include="Xhm.CPF.Mac" Version="0.9.6.*" />
     <PackageReference Include="Xhm.CPF.Linux" Version="0.9.6.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CPF.Extend.Tools\CPF.Extend.Tools.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <DefineConstants Condition="'$(TargetFramework)'=='net40'">Net4</DefineConstants>

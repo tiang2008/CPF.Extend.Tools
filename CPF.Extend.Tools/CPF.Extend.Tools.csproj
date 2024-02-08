@@ -1,7 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+	  <TargetFrameworks>netstandard2.0;net40</TargetFrameworks>
+	  <Authors>tiang2008</Authors>
+	  <Company>tiang2008</Company>
+	  <Product>CPF跨平台UI框架扩展库</Product>
+	  <Description>CPF(Cross platform UI framework) 跨平台UI框架扩展库</Description>
+	  <Version>0.1</Version>
+	  <LangVersion>9.0</LangVersion>
+	  <PackageId>CPF.Extend.Tools</PackageId>
+	  <PackageProjectUrl></PackageProjectUrl>
+	  <Copyright>Copyright (c) 2024 by tiang2008</Copyright>
+	  <PackageReleaseNotes>CPF(Cross platform UI framework) 跨平台UI框架扩展库</PackageReleaseNotes>
+	  <PackageLicenseExpression></PackageLicenseExpression>
+	  <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xhm.CPF" Version="0.9.6.7" />
+  </ItemGroup>
 
 </Project>
