@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworks>netcoreapp3.0;net40</TargetFrameworks>
+    <ApplicationIcon />
+    <StartupObject />
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Stylesheet1.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Stylesheet1.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xhm.CPF" Version="0.9.6.*" />
+    <PackageReference Include="Xhm.CPF.Windows" Version="0.9.6.*" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'!='net40'">
+    <PackageReference Include="Xhm.CPF.Skia" Version="0.9.6.*" />
+    <PackageReference Include="Xhm.CPF.Mac" Version="0.9.6.*" />
+    <PackageReference Include="Xhm.CPF.Linux" Version="0.9.6.*" />
+  </ItemGroup>
+  <PropertyGroup>
+    <DefineConstants Condition="'$(TargetFramework)'=='net40'">Net4</DefineConstants>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+</Project>
