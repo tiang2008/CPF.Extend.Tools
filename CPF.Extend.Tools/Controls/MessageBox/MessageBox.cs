@@ -117,8 +117,12 @@ namespace CPF.Extend.Tools.Controls.MessageBox
             msg.Icon = main.Icon;
             // 加载拥有者窗口的样式
             msg.LoadStyle(main);
+            // 将消息框的拥有者设置为指定的窗口。
+            msg.Owner = main;
+            // 居中显示
+            msg.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             // 同步显示消息框
-            msg.ShowDialogSync();
+            msg.ShowDialogSync(main);
             // 返回用户单击的消息框按钮的结果
             return msg.Result;
         }

@@ -92,6 +92,36 @@ namespace CPF.Extend.Tools.Controls.MessageBox
         }
 
         /// <summary>
+        /// 获取或设置窗口的启动位置。
+        /// </summary>
+        public WindowStartupLocation WindowStartupLocation
+        {
+            get
+            {
+                return GetValue<WindowStartupLocation>();
+            }
+            set
+            {
+                SetValue<WindowStartupLocation>(value);
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置窗口的拥有者。
+        /// </summary>
+        public Window Owner
+        {
+            get
+            {
+                return GetValue<Window>();
+            }
+            set
+            {
+                SetValue<Window>(value);
+            }
+        }
+
+        /// <summary>
         /// 获取或设置消息框的结果。
         /// </summary>
         public MessageBoxResult Result { get; set; }
@@ -135,6 +165,7 @@ namespace CPF.Extend.Tools.Controls.MessageBox
                                             {
                                                 PresenterFor = this,
                                                 Name="Path",
+                                                IsAntiAlias=true,
                                                 Width=25,
                                                 Height=25,
                                                 Stretch= Stretch.Fill
@@ -190,6 +221,14 @@ namespace CPF.Extend.Tools.Controls.MessageBox
         protected override void OnInitialized()
         {
             base.OnInitialized();
+            LayoutManager.ExecuteLayoutPass();
+            int leftDeviceUnits = this.Position.X;
+            int topDeviceUnits = this.Position.Y;
+            Size currentSizeDeviceUnits = this.ActualSize;
+            if ((CalculateWindowLocation(ref leftDeviceUnits, ref topDeviceUnits, currentSizeDeviceUnits)) && WindowState == WindowState.Normal)
+            {
+                this.Position= new PixelPoint(leftDeviceUnits, topDeviceUnits);
+            }
 
             _message = FindPresenterByName<TextBox>("Message");
             if (_message != null)
@@ -217,6 +256,60 @@ namespace CPF.Extend.Tools.Controls.MessageBox
                 _buttonOK.Visibility = _okVisibility;
                 _buttonOK.Click += _buttonOK_Click;
             }
+        }
+
+        private bool CalculateWindowLocation(ref int leftDeviceUnits, ref int topDeviceUnits, Size currentSizeDeviceUnits)
+        {
+            double value = leftDeviceUnits;
+            double value2 = topDeviceUnits;
+            switch (WindowStartupLocation)
+            {
+                case WindowStartupLocation.CenterScreen:
+                    {
+                        CalculateCenterScreenPosition(currentSizeDeviceUnits, ref leftDeviceUnits, ref topDeviceUnits);
+                        break;
+                    }
+                case WindowStartupLocation.CenterOwner:
+                    {
+                        Rect rect = Rect.Empty;
+                        if (WindowState == WindowState.Maximized || WindowState == WindowState.Minimized)
+                        {
+                            goto case WindowStartupLocation.CenterScreen;
+                        }
+
+                        Size windowSize = Owner.ActualSize;
+                        PixelPoint point = new PixelPoint((int)windowSize.Width, (int)windowSize.Height);
+
+
+                        PixelPoint point2 = this.Owner.Position;
+                        rect = new Rect(point2.X, point2.Y, point.X, point.Y);
+
+
+                        if (!rect.IsEmpty)
+                        {
+                            leftDeviceUnits = (int)(rect.X + (int)(rect.Width - currentSizeDeviceUnits.Width) / 2.0);
+                            topDeviceUnits = (int)(rect.Y + (rect.Height - currentSizeDeviceUnits.Height) / 2.0);
+                            Rect rECT = this.Screen.WorkingArea;
+                            leftDeviceUnits = (int)System.Math.Min(leftDeviceUnits, (double)rECT.Right - currentSizeDeviceUnits.Width);
+                            leftDeviceUnits = (int)System.Math.Max(leftDeviceUnits, rECT.Left);
+                            topDeviceUnits = (int)System.Math.Min(topDeviceUnits, (double)rECT.Bottom - currentSizeDeviceUnits.Height);
+                            topDeviceUnits = System.Math.Max(topDeviceUnits, (int)rECT.Top);
+                        }
+
+                        break;
+                    }
+            }
+
+            return true;
+        }
+
+        internal void CalculateCenterScreenPosition(Size currentSizeDeviceUnits, ref int leftDeviceUnits, ref int topDeviceUnits)
+        {
+            Rect rECT = this.Screen.WorkingArea;
+            float num = rECT.Right - rECT.Left;
+            float num2 = rECT.Bottom - rECT.Top;
+            leftDeviceUnits = (int)(rECT.Left + (num - currentSizeDeviceUnits.Width) / 2.0);
+            topDeviceUnits = (int)(rECT.Top + (num2 - currentSizeDeviceUnits.Height) / 2.0);
         }
 
         /// <summary>

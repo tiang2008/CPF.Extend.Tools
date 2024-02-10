@@ -24,64 +24,80 @@ namespace CPF.Extend.Tools.SamplesCode
                 Height = "100%",
                 Children =
                 {
-                    new StackPanel{ 
-                        Orientation= Orientation.Horizontal,
-                        Children=
+                    new TabControl
+                    {
+                        PresenterFor = this,
+                        TabStripPlacement= Dock.Left,
+                        Width="100%",
+                        Height="100%",
+                        Items=
                         {
-                            new Button
+                            new TabItem
                             {
-                                MarginLeft=10,
-                                Content="Info" ,
-                                Commands=
+                                Header="对话框",
+                                Content=new StackPanel
                                 {
+                                    Orientation= Orientation.Horizontal,
+                                    Children=
                                     {
-                                        nameof(Button.Click),
-                                        btnInformation_Click
-                                    }
+                                        new Button
+                                        {
+                                            MarginLeft=10,
+                                            Content="Info" ,
+                                            Commands=
+                                            {
+                                                {
+                                                    nameof(Button.Click),
+                                                    btnInformation_Click
+                                                }
 
-                                }
-                            },
-                            new Button
-                            {
-                                MarginLeft=10,
-                                Content="Warning" ,
-                                Commands=
-                                {
-                                    {
-                                        nameof(Button.Click),
-                                        btnWarning_Click
-                                    }
+                                            }
+                                        },
+                                        new Button
+                                        {
+                                            MarginLeft=10,
+                                            Content="Warning" ,
+                                            Commands=
+                                            {
+                                                {
+                                                    nameof(Button.Click),
+                                                    btnWarning_Click
+                                                }
 
-                                }
-                            },
-                            new Button
-                            {
-                                MarginLeft=10,
-                                Content="Error" ,
-                                Commands=
-                                {
-                                    {
-                                        nameof(Button.Click),
-                                        btnError_Click
-                                    }
+                                            }
+                                        },
+                                        new Button
+                                        {
+                                            MarginLeft=10,
+                                            Content="Error" ,
+                                            Commands=
+                                            {
+                                                {
+                                                    nameof(Button.Click),
+                                                    btnError_Click
+                                                }
 
-                                }
-                            },
-                            new Button
-                            {
-                                MarginLeft=10,
-                                Content="Question" ,
-                                Commands=
-                                {
-                                    {
-                                        nameof(Button.Click),
-                                        btnQuestion_Click
-                                    }
+                                            }
+                                        },
+                                        new Button
+                                        {
+                                            MarginLeft=10,
+                                            Content="Question" ,
+                                            Commands=
+                                            {
+                                                {
+                                                    nameof(Button.Click),
+                                                    btnQuestion_Click
+                                                }
 
-                                }
+                                            }
+                                        }
+                                    }
+                    
+                                } 
                             }
-                        }
-                    }
+                        } 
+                      },
                 }
             }));
         }
