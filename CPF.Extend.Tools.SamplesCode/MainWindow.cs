@@ -1,5 +1,6 @@
 ﻿using CPF.Controls;
 using CPF.Extend.Tools.Controls.MessageBox;
+using CPF.Extend.Tools.Controls.ScreenCapturer;
 using MessageBox = CPF.Extend.Tools.Controls.MessageBox.MessageBox;
 
 namespace CPF.Extend.Tools.SamplesCode
@@ -95,6 +96,27 @@ namespace CPF.Extend.Tools.SamplesCode
                                     }
                     
                                 } 
+                            },
+                            new TabItem
+                            {
+                                Header="截屏",
+                                Content=new Panel
+                                {
+                                    Children={
+                                        new Button
+                                        {
+                                            Content="ScreenCut" ,
+                                            Commands=
+                                            {
+                                                {
+                                                    nameof(Button.Click),
+                                                    btnScreenCut_Click
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         } 
                       },
@@ -108,6 +130,19 @@ namespace CPF.Extend.Tools.SamplesCode
         protected override void OnInitialized()
         {
             base.OnInitialized();
+        }
+
+        
+        /// <summary>
+        /// 当截屏按钮被点击时执行的操作。
+        /// </summary>
+        /// <param name="s">按钮对象。</param>
+        /// <param name="e">事件参数。</param>
+        private void btnScreenCut_Click(CpfObject s, object e)
+        {
+            // 开始截屏
+            ScreenCapture  screenCapture=new ScreenCapture();
+            screenCapture.Capture();
         }
 
         /// <summary>

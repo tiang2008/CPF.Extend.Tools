@@ -221,15 +221,7 @@ namespace CPF.Extend.Tools.Controls.MessageBox
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            LayoutManager.ExecuteLayoutPass();
-            int leftDeviceUnits = this.Position.X;
-            int topDeviceUnits = this.Position.Y;
-            Size currentSizeDeviceUnits = this.ActualSize;
-            if ((CalculateWindowLocation(ref leftDeviceUnits, ref topDeviceUnits, currentSizeDeviceUnits)) && WindowState == WindowState.Normal)
-            {
-                this.Position= new PixelPoint(leftDeviceUnits, topDeviceUnits);
-            }
-
+           
             _message = FindPresenterByName<TextBox>("Message");
             if (_message != null)
             {
@@ -255,6 +247,15 @@ namespace CPF.Extend.Tools.Controls.MessageBox
             {
                 _buttonOK.Visibility = _okVisibility;
                 _buttonOK.Click += _buttonOK_Click;
+            }
+
+            LayoutManager.ExecuteLayoutPass();
+            int leftDeviceUnits = this.Position.X;
+            int topDeviceUnits = this.Position.Y;
+            Size currentSizeDeviceUnits = this.ActualSize;
+            if ((CalculateWindowLocation(ref leftDeviceUnits, ref topDeviceUnits, currentSizeDeviceUnits)) && WindowState == WindowState.Normal)
+            {
+                this.Position = new PixelPoint(leftDeviceUnits, topDeviceUnits);
             }
         }
 
