@@ -17,6 +17,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Controls\ScreenCut\ScreenCut.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\ScreenCut\ScreenCut.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Xhm.CPF" Version="0.9.6.7" />
   </ItemGroup>
 

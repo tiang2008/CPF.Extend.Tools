@@ -346,7 +346,8 @@ namespace CPF.Extend.Tools.Controls
                                        Data="M384 690l452-452 60 60-512 512-238-238 60-60z"
                                    }
                                },
-                           } 
+                           },
+                           Classes="el-radio-group",
                        }
                     }
                 }
@@ -358,38 +359,70 @@ namespace CPF.Extend.Tools.Controls
                 CanActivate = true,
                 StaysOpen = true,
                 Placement = PlacementMode.Padding,
-                BorderFill = "#aaa",
-                Background = "#fff",
-                BorderStroke = "1",
+                Background = null,
             };
             _popupBorder = new Border
             {
+                MarginTop = 10,
                 PresenterFor = this,
                 Name = "EditBar",
-                Visibility = Visibility.Hidden,
-                Background = "#FFEBF4FF",
+                Background = null,
                 CornerRadius = new CornerRadius(12),
-                Effect = new OpacityEffect { Opacity = 0.1f },
-                Child=new Panel 
+                Child = new WrapPanel
                 {
-                    Children = 
+                    MarginTop=10,
+                    Children=
                     {
-                        new Path
+                        new RadioButton
                         {
-                            Width=10,
-                            Margin="0,-8,0,0",
-                            Data="M768 716.8h-512l256-460.8 256 460.8z",
-                            Fill = "#FFEBF4FF",
-                            Stretch= Stretch.Uniform,
+                            Margin="4,0,4,0",
+                            IsChecked=true,
+                            Content=new Ellipse
+                            {
+                                Fill=Color.Red,
+                            }
                         },
-                        new WrapPanel
+                        new RadioButton
                         {
-                            Margin="10",
+                            Margin="4,0,4,0",
+                            IsChecked=true,
+                            Content=new Ellipse
+                            {
+                                Fill=Color.Red,
+                            }
+                        },
+                        new RadioButton
+                        {
+                            Margin="4,0,4,0",
+                            IsChecked=true,
+                            Content=new Ellipse
+                            {
+                                Fill=Color.Red,
+                            }
+                        },
+                        new RadioButton
+                        {
+                            Margin="4,0,4,0",
+                            IsChecked=true,
+                            Content=new Ellipse
+                            {
+                                Fill=Color.Red,
+                            }
                         }
-                    }
+                    },
+                    Classes="el-radio-group"
                 }
             };
+            _popup.Children.Add(new Path
+            {
+                Width = 10,
+                MarginTop = 0,
+                Data = "M768 716.8h-512l256-460.8 256 460.8z",
+                Fill = "#EBF4FFFF",
+                Stretch = Stretch.Uniform,
+            });
             _popup.Children.Add(_popupBorder);
+            LoadStyleFile("res://CPF.Extend.Tools/Controls/ScreenCut/ScreenCut.css");
         }
 
         /// <summary>
@@ -451,7 +484,6 @@ namespace CPF.Extend.Tools.Controls
                 _radioButtonText.Checked += _radioButtonText_Checked;
                 _radioButtonText.Unchecked += _radioButtonText_Unchecked;
             }
-            _popup.MarginLeft = -_popupBorder.ActualSize.Width / 3;
         }
 
         //public override void OnApplyTemplate()
@@ -631,6 +663,7 @@ namespace CPF.Extend.Tools.Controls
             if (_popup.PlacementTarget != null && _popup.Visibility == Visibility.Visible)
                 _popup.Visibility = Visibility.Collapsed;
             _popup.PlacementTarget = radioButton;
+            _popup.MarginLeft = -_popupBorder.ActualSize.Width / 3-10;
             _popup.Visibility = Visibility.Visible;
             DisposeControl();
         }
