@@ -26,7 +26,7 @@ namespace CPF.Extend.Tools.Controls
         /// <summary>
         /// 当前选择颜色
         /// </summary>
-        private Brush _currentBrush;
+        private ViewFill _currentBrush;
         // 弹出窗口
         private Popup _popup;
 
@@ -101,11 +101,13 @@ namespace CPF.Extend.Tools.Controls
             base.MarginTop = screen.WorkingArea.Top;
             ShowInTaskbar = false;
             screenDPI = GetScreenDPI(ScreenIndex);
+            this.Closed += OnClosed;
         }
 
-        public new void Dispose()
+        private void OnClosed(object sender, EventArgs e)
         {
-            base.Dispose();
+            this._popup.Hide();
+            this._popup.Dispose();
             GC.SuppressFinalize(this);
         }
 
@@ -201,36 +203,148 @@ namespace CPF.Extend.Tools.Controls
                        Cursor= Cursors.Arrow,
                        Child=new WrapPanel
                        {
+                           MarginLeft=10,
+                           MarginRight=10,
+                           MarginTop=5,
+                           MarginBottom=5,
                            Children =
                            {
                                new RadioButton
                                {
+                                   PresenterFor=this,
+                                   Name="RadioButtonRectangle",
                                    MarginLeft=4,
+                                   MarginRight=4,
                                    ToolTip="方框",
                                    Content=new Path
                                    {
                                        Width=18,
                                        Height=18,
                                        Stretch= Stretch.Fill,
-                                       Fill="#606266",
+                                       Fill="#626660",
                                        Data="M640 146.286h-475.429q-37.714 0-64.571 26.857t-26.857 64.571v475.429q0 37.714 26.857 64.571t64.571 26.857h475.429q37.714 0 64.571-26.857t26.857-64.571v-475.429q0-37.714-26.857-64.571t-64.571-26.857zM804.571 237.714v475.429q0 68-48.286 116.286t-116.286 48.286h-475.429q-68 0-116.286-48.286t-48.286-116.286v-475.429q0-68 48.286-116.286t116.286-48.286h475.429q68 0 116.286 48.286t48.286 116.286z"
                                    }
                                },
                                new RadioButton
                                {
+                                   PresenterFor=this,
+                                   Name="RadioButtonEllipse",
                                    MarginLeft=4,
+                                   MarginRight=4,
                                    ToolTip="椭圆",
                                    Content=new Ellipse
                                    {
                                        Width=19,
                                        Height=19,
                                        StrokeStyle= new Stroke(1.5f),
-                                       StrokeFill="#606266",
+                                       StrokeFill="#626660",
                                    }
                                },
-                                 new RadioButton
+                               new RadioButton
                                {
-
+                                   PresenterFor=this,
+                                   Name="RadioButtonArrow",
+                                   MarginLeft=4,
+                                   MarginRight=4,
+                                   ToolTip="箭头",
+                                   Content=new Path
+                                   {
+                                       Width=18,
+                                       Height=18,
+                                       StrokeStyle= new Stroke(3f),
+                                       StrokeFill=Color.Transparent,
+                                       Stretch= Stretch.Fill,
+                                       Fill="#626660",
+                                       Data="M384 214h426v426h-84v-282l-496 496-60-60 496-496h-282v-84z"
+                                   }
+                               },
+                               new RadioButton
+                               {
+                                   PresenterFor=this,
+                                   Name="RadioButtonInk",
+                                   MarginLeft=4,
+                                   MarginRight=4,
+                                   ToolTip="画笔",
+                                   Content=new Path
+                                   {
+                                       Width=18,
+                                       Height=18,
+                                       Stretch= Stretch.Fill,
+                                       Fill="#626660",
+                                       Data="M986.466 37.502c-49.982-49.982-131.004-49.982-180.986 0l-483.984 484.144c43.262 11.264 83.262 32.99 115.74 65.502 32.99 32.99 54.014 73.246 65.246 115.484l483.984-484.144c50.014-49.982 50.014-131.002 0-180.986zM346.742 858.63c49.982-49.982 49.982-131.004 0-180.986s-131.004-49.982-180.986 0l-165.756 346.356 346.742-165.37z"
+                                   }
+                               },
+                               new RadioButton
+                               {
+                                   PresenterFor=this,
+                                   Name="RadioButtonText",
+                                   MarginLeft=4,
+                                   MarginRight=4,
+                                   ToolTip="文字",
+                                   Content=new Path
+                                   {
+                                       Width=18,
+                                       Height=18,
+                                       Stretch= Stretch.Fill,
+                                       Fill="#626660",
+                                       Data="M8.394,7.3850001 L18,7.3850001 18,8.9495381 14.071471,8.9495381 14.071471,21 12.304952,21 12.304952,8.9495381 8.394,8.9495381 z M5.2364039,2.4000326 C4.4364113,2.4000326 3.7515685,2.6937805 3.1818757,3.2812766 2.612183,3.8687721 2.3273365,4.5750159 2.3273365,5.4000081 L2.3273365,20.999992 C2.3273365,21.824983 2.612183,22.531227 3.1818757,23.118723 3.7515685,23.706219 4.4364113,23.999966 5.2364039,23.999966 L20.363661,23.999966 C21.163652,23.999966 21.848495,23.706219 22.418188,23.118723 22.987883,22.531227 23.272728,21.824983 23.272728,20.999992 L23.272728,5.4000081 C23.272728,4.5750159 22.987883,3.8687721 22.418188,3.2812766 21.848495,2.6937805 21.163652,2.4000326 20.363661,2.4000326 z M5.2363719,0 L20.36363,0 C21.806051,0 23.039387,0.52812719 24.063631,1.5843812 25.087877,2.6406356 25.6,3.912511 25.6,5.4000081 L25.6,20.999992 C25.6,22.487488 25.087877,23.759365 24.063631,24.815618 23.039387,25.871874 21.806051,26.399999 20.36363,26.399999 L5.2363719,26.399999 C3.7939503,26.399999 2.5606164,25.871874 1.5363699,24.815618 0.51212323,23.759365 -5.3697355E-08,22.487488 3.5527137E-15,20.999992 L3.5527137E-15,5.4000081 C-5.3697355E-08,3.912511 0.51212323,2.6406356 1.5363699,1.5843812 2.5606164,0.52812719 3.7939503,0 5.2363719,0 z"
+                                   }
+                               },
+                               new Rectangle
+                               {
+                                   Width=1,
+                                   Height=18,
+                                   MarginLeft=4,
+                                   MarginRight=4,
+                                   StrokeFill="#939990",
+                               },
+                               new Button
+                               {
+                                   PresenterFor=this,
+                                   Name="ButtonSave",
+                                   MarginLeft=4,
+                                   MarginRight=4,
+                                   ToolTip="保存",
+                                   Content=new Path
+                                   {
+                                       Width=18,
+                                       Height=18,
+                                       Stretch= Stretch.Fill,
+                                       Fill="#626660",
+                                       Data="M512 42.667q17.667 0 30.167 12.5t12.5 30.167v494.333l140.333-140.667q12.333-12.333 30.333-12.333 18.333 0 30.5 12.167t12.167 30.5q0 18-12.333 30.333l-213.333 213.333q-12.333 12.333-30.333 12.333t-30.333-12.333l-213.333-213.333q-12.333-13-12.333-30.333 0-17.667 12.5-30.167t30.167-12.5q18 0 30.333 12.333l140.333 140.667v-494.333q0-17.667 12.5-30.167t30.167-12.5zM938.667 640q17.667 0 30.167 12.5t12.5 30.167v170.667q0 53.333-37 90.333-37.667 37.667-90 37.667h-683.667q-52.333 0-90.667-37.333-37.333-38.333-37.333-90.667v-170.667q0-17.667 12.5-30.167t30.167-12.5 30.167 12.5 12.5 30.167v170.667q0 17.667 12.5 30.167t30.167 12.5h683.667q17.333 0 29.5-12.5t12.167-30.167v-170.667q0-17.667 12.5-30.167t30.167-12.5z"
+                                   }
+                               },
+                               new Button
+                               {
+                                    PresenterFor=this,
+                                   Name="ButtonCancel",
+                                   MarginLeft=4,
+                                   MarginRight=4,
+                                   ToolTip="取消",
+                                   Content=new Path
+                                   {
+                                       Width=14,
+                                       Height=14,
+                                       Stretch= Stretch.Fill,
+                                       Fill="#626660",
+                                       Data="M810.667 170.667q18.333 0 30.5 12.167t12.167 30.5q0 18-12.333 30.333l-268.667 268.333 268.667 268.333q12.333 12.333 12.333 30.333 0 18.333-12.167 30.5t-30.5 12.167q-18 0-30.333-12.333l-268.333-268.667-268.333 268.667q-12.333 12.333-30.333 12.333-18.333 0-30.5-12.167t-12.167-30.5q0-18 12.333-30.333l268.667-268.333-268.667-268.333q-12.333-12.333-12.333-30.333 0-18.333 12.167-30.5t30.5-12.167q18 0 30.333 12.333l268.333 268.667 268.333-268.667q12.333-12.333 30.333-12.333z"
+                                   }
+                               },
+                               new Button
+                               {
+                                    PresenterFor=this,
+                                   Name="ButtonComplete",
+                                   MarginLeft=4,
+                                   MarginRight=4,
+                                   ToolTip="完成",
+                                   Content=new Path
+                                   {
+                                       Width=20,
+                                       Height=15,
+                                       Stretch= Stretch.Fill,
+                                       Fill="#626660",
+                                       Data="M384 690l452-452 60 60-512 512-238-238 60-60z"
+                                   }
                                },
                            } 
                        }
@@ -239,8 +353,11 @@ namespace CPF.Extend.Tools.Controls
             });
             _popup = new Popup
             {
-                CanActivate = false,
-                StaysOpen = false,
+                Visibility= Visibility.Hidden,
+                MarginTop = 30,
+                CanActivate = true,
+                StaysOpen = true,
+                Placement = PlacementMode.Padding,
                 BorderFill = "#aaa",
                 Background = "#fff",
                 BorderStroke = "1",
@@ -252,7 +369,25 @@ namespace CPF.Extend.Tools.Controls
                 Visibility = Visibility.Hidden,
                 Background = "#FFEBF4FF",
                 CornerRadius = new CornerRadius(12),
-                Effect = new OpacityEffect { Opacity = 0.1f }
+                Effect = new OpacityEffect { Opacity = 0.1f },
+                Child=new Panel 
+                {
+                    Children = 
+                    {
+                        new Path
+                        {
+                            Width=10,
+                            Margin="0,-8,0,0",
+                            Data="M768 716.8h-512l256-460.8 256 460.8z",
+                            Fill = "#FFEBF4FF",
+                            Stretch= Stretch.Uniform,
+                        },
+                        new WrapPanel
+                        {
+                            Margin="10",
+                        }
+                    }
+                }
             };
             _popup.Children.Add(_popupBorder);
         }
@@ -277,6 +412,46 @@ namespace CPF.Extend.Tools.Controls
             _border = FindPresenterByName<Border>("Border");
             _border.Effect = new OpacityEffect { Opacity = 0f };
             _editBar = FindPresenterByName<Border>("EditBar");
+            _buttonSave = FindPresenterByName<Button>("ButtonSave"); 
+            if (_buttonSave != null)
+                _buttonSave.Click += _buttonSave_Click;
+            _buttonCancel = FindPresenterByName<Button>("ButtonCancel");
+            if (_buttonCancel != null)
+                _buttonCancel.Click += _buttonCancel_Click;
+            _buttonComplete = FindPresenterByName<Button>("ButtonComplete");
+            if (_buttonComplete != null)
+                _buttonComplete.Click += _buttonComplete_Click;
+            _radioButtonRectangle = FindPresenterByName<RadioButton>("RadioButtonRectangle");
+            if (_radioButtonRectangle != null)
+            {
+                _radioButtonRectangle.Checked += _radioButtonRectangle_Checked;
+                _radioButtonRectangle.Unchecked += _radioButtonRectangle_Unchecked;
+            }
+            _radioButtonEllipse = FindPresenterByName<RadioButton>("RadioButtonEllipse");
+            if (_radioButtonEllipse != null)
+            {
+                _radioButtonEllipse.Checked += _radioButtonEllipse_Checked;
+                _radioButtonEllipse.Unchecked += _radioButtonEllipse_Unchecked;
+            }
+            _radioButtonArrow = FindPresenterByName<RadioButton>("RadioButtonArrow");
+            if (_radioButtonArrow != null) 
+            {
+                _radioButtonArrow.Checked += _radioButtonArrow_Checked;
+                _radioButtonArrow.Unchecked += _radioButtonArrow_Unchecked;
+            }
+            _radioButtonInk = FindPresenterByName<RadioButton>("RadioButtonInk");
+            if (_radioButtonInk != null) 
+            {
+                _radioButtonInk.Checked += _radioButtonInk_Checked;
+                _radioButtonInk.Unchecked += _radioButtonInk_Unchecked;
+            }
+            _radioButtonText = FindPresenterByName<RadioButton>("RadioButtonText");
+            if (_radioButtonText != null) 
+            {
+                _radioButtonText.Checked += _radioButtonText_Checked;
+                _radioButtonText.Unchecked += _radioButtonText_Unchecked;
+            }
+            _popup.MarginLeft = -_popupBorder.ActualSize.Width / 3;
         }
 
         //public override void OnApplyTemplate()
@@ -384,58 +559,81 @@ namespace CPF.Extend.Tools.Controls
                 OnPreviewMouseLeftButtonDown(e);
         }
 
-        //private void _radioButtonInk_Click(object sender, RoutedEventArgs e)
-        //{
-        //    RadioButtonChecked(_radioButtonInk, ScreenCutMouseType.DrawInk);
-        //}
+        private void _radioButtonInk_Checked(object sender, EventArgs e)
+        {
+            RadioButtonChecked(_radioButtonInk, ScreenCutMouseType.DrawInk);
+        }
 
-        //private void _radioButtonText_Click(object sender, RoutedEventArgs e)
-        //{
-        //    RadioButtonChecked(_radioButtonText, ScreenCutMouseType.DrawText);
-        //}
+        private void _radioButtonInk_Unchecked(object sender, EventArgs e)
+        {
+            RadioButtonUnchecked(_radioButtonInk, ScreenCutMouseType.DrawInk);
+        }
 
-        //private void _radioButtonArrow_Click(object sender, RoutedEventArgs e)
-        //{
-        //    RadioButtonChecked(_radioButtonArrow, ScreenCutMouseType.DrawArrow);
-        //}
+        private void _radioButtonText_Checked(object sender, EventArgs e)
+        {
+            RadioButtonChecked(_radioButtonText, ScreenCutMouseType.DrawText);
+        }
 
-        //private void _wrapPanel_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    if (e.Source is RadioButton)
-        //    {
-        //        var radioButton = (RadioButton)e.Source;
-        //        _currentBrush = radioButton.Background;
-        //    }
-        //}
+        private void _radioButtonText_Unchecked(object sender, EventArgs e)
+        {
+            RadioButtonUnchecked(_radioButtonText, ScreenCutMouseType.DrawText);
+        }
 
-        //private void _radioButtonRectangle_Click(object sender, RoutedEventArgs e)
-        //{
-        //    RadioButtonChecked(_radioButtonRectangle, ScreenCutMouseType.DrawRectangle);
-        //}
+        private void _radioButtonArrow_Checked(object sender, EventArgs e)
+        {
+            RadioButtonChecked(_radioButtonArrow, ScreenCutMouseType.DrawArrow);
+        }
 
-        //private void _radioButtonEllipse_Click(object sender, RoutedEventArgs e)
-        //{
-        //    RadioButtonChecked(_radioButtonEllipse, ScreenCutMouseType.DrawEllipse);
-        //}
+        private void _radioButtonArrow_Unchecked(object sender, EventArgs e)
+        {
+            RadioButtonUnchecked(_radioButtonArrow, ScreenCutMouseType.DrawArrow);
+        }
 
-        //private void RadioButtonChecked(RadioButton radioButton, ScreenCutMouseType screenCutMouseTypeRadio)
-        //{
-        //    if (radioButton.IsChecked == true)
-        //    {
-        //        screenCutMouseType = screenCutMouseTypeRadio;
-        //        _border.Cursor = Cursors.Arrow;
-        //        if (_popup.PlacementTarget != null && _popup.IsOpen)
-        //            _popup.IsOpen = false;
-        //        _popup.PlacementTarget = radioButton;
-        //        _popup.IsOpen = true;
-        //        DisposeControl();
-        //    }
-        //    else
-        //    {
-        //        if (screenCutMouseType == screenCutMouseTypeRadio)
-        //            Restore();
-        //    }
-        //}
+        private void _wrapPanel_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is RadioButton)
+            {
+                var radioButton = (RadioButton)e.OriginalSource;
+                _currentBrush = radioButton.Background;
+            }
+        }
+
+        private void _radioButtonRectangle_Checked(object sender, EventArgs e)
+        {
+            RadioButtonChecked(_radioButtonRectangle, ScreenCutMouseType.DrawRectangle);
+        }
+
+        private void _radioButtonRectangle_Unchecked(object sender, EventArgs e)
+        {
+            RadioButtonUnchecked(_radioButtonRectangle, ScreenCutMouseType.DrawRectangle);
+        }
+
+        private void _radioButtonEllipse_Checked(object sender, EventArgs e)
+        {
+            RadioButtonChecked(_radioButtonEllipse, ScreenCutMouseType.DrawEllipse);
+        }
+
+        private void _radioButtonEllipse_Unchecked(object sender, EventArgs e)
+        {
+            RadioButtonUnchecked(_radioButtonEllipse, ScreenCutMouseType.DrawEllipse);
+        }
+
+        private void RadioButtonUnchecked(RadioButton radioButton, ScreenCutMouseType screenCutMouseTypeRadio)
+        {
+            if (screenCutMouseType == screenCutMouseTypeRadio)
+                Restore();
+        }
+
+        private void RadioButtonChecked(RadioButton radioButton, ScreenCutMouseType screenCutMouseTypeRadio)
+        {
+            screenCutMouseType = screenCutMouseTypeRadio;
+            _border.Cursor = Cursors.Arrow;
+            if (_popup.PlacementTarget != null && _popup.Visibility == Visibility.Visible)
+                _popup.Visibility = Visibility.Collapsed;
+            _popup.PlacementTarget = radioButton;
+            _popup.Visibility = Visibility.Visible;
+            DisposeControl();
+        }
 
         private void Restore()
         {
@@ -448,8 +646,8 @@ namespace CPF.Extend.Tools.Controls
 
         private void ResoreRadioButton()
         {
-            //_radioButtonRectangle.IsChecked = false;
-            //_radioButtonEllipse.IsChecked = false;
+            _radioButtonRectangle.IsChecked = false;
+            _radioButtonEllipse.IsChecked = false;
         }
 
         private void _border_SizeChanged(object sender, CPFPropertyChangedEventArgs e)
@@ -479,49 +677,67 @@ namespace CPF.Extend.Tools.Controls
             }
         }
 
-        //private void _buttonSave_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var dlg = new SaveFileDialog();
-        //    dlg.FileName = $"WPFDevelopers{DateTime.Now.ToString("yyyyMMddHHmmss")}.jpg";
-        //    dlg.DefaultExt = ".jpg";
-        //    dlg.Filter = "image file|*.jpg";
+        private async void _buttonSave_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new SaveFileDialog {
+                Title = "保存文件",
+                InitialFileName= $"ScreenCut{DateTime.Now.ToString("yyyyMMddHHmmss")}.jpg",
+                Filters =
+                {
+                    new FileDialogFilter
+                    {
+                        Extensions="jpg",
+                        Name="jpg文件",
+                        
+                    }
+                }
+            };
+            var sf = await dlg.ShowAsync(this);
+            if (!String.IsNullOrEmpty(sf))
+            {
+                Bitmap pngEncoder =CutBitmap();
+                using (var fs = System.IO.File.OpenWrite(sf))
+                {
+                    pngEncoder.SaveToStream(ImageFormat.Png,fs);
+                    fs.Dispose();
+                    fs.Close();
+                    Close();
+                }
+            }
+        }
 
-        //    if (dlg.ShowDialog() == true)
-        //    {
-        //        BitmapEncoder pngEncoder = new PngBitmapEncoder();
-        //        pngEncoder.Frames.Add(BitmapFrame.Create(CutBitmap()));
-        //        using (var fs = File.OpenWrite(dlg.FileName))
-        //        {
-        //            pngEncoder.Save(fs);
-        //            fs.Dispose();
-        //            fs.Close();
-        //            Close();
-        //        }
-        //    }
-        //}
+        private void _buttonComplete_Click(object sender, RoutedEventArgs e)
+        {
+            var bitmap = CutBitmap();
+            if (CutCompleted != null)
+                CutCompleted(bitmap);
+            Close();
+        }
 
-        //private void _buttonComplete_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var bitmap = CutBitmap();
-        //    if (CutCompleted != null)
-        //        CutCompleted(bitmap);
-        //    Close();
-        //}
-
-        //private CroppedBitmap CutBitmap()
-        //{
-        //    _border.Visibility = Visibility.Collapsed;
-        //    _editBar.Visibility = Visibility.Collapsed;
-        //    _rectangleLeft.Visibility = Visibility.Collapsed;
-        //    _rectangleTop.Visibility = Visibility.Collapsed;
-        //    _rectangleRight.Visibility = Visibility.Collapsed;
-        //    _rectangleBottom.Visibility = Visibility.Collapsed;
-        //    var renderTargetBitmap = new RenderTargetBitmap((int)_canvas.Width,
-        //        (int)_canvas.Height, 96d, 96d, PixelFormats.Default);
-        //    renderTargetBitmap.Render(_canvas);
-        //    return new CroppedBitmap(renderTargetBitmap,
-        //        new Int32Rect((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height));
-        //}
+        private Bitmap CutBitmap()
+        {
+            _border.Visibility = Visibility.Collapsed;
+            _editBar.Visibility = Visibility.Collapsed;
+            _rectangleLeft.Visibility = Visibility.Collapsed;
+            _rectangleTop.Visibility = Visibility.Collapsed;
+            _rectangleRight.Visibility = Visibility.Collapsed;
+            _rectangleBottom.Visibility = Visibility.Collapsed;
+            var renderTargetBitmap = new Bitmap((int)_canvas.ActualSize.Width,
+                (int)_canvas.ActualSize.Height);
+            using (var dc = DrawingContext.FromBitmap(renderTargetBitmap))
+            {
+                _canvas.Render(dc);
+            }
+            Bitmap croppedBitmap = new Bitmap((int)_border.Width.Value,
+    (int)_border.Height.Value);
+            using (var dc = DrawingContext.FromBitmap(croppedBitmap))
+            {
+                dc.DrawImage(renderTargetBitmap,
+                    new Rect(0, 0, _border.ActualSize.Width, _border.ActualSize.Height),
+                    new Rect(_border.MarginLeft.Value, _border.MarginTop.Value, _border.ActualSize.Width, _border.ActualSize.Height));
+            }
+            return croppedBitmap;
+        }
 
         private void _buttonCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -591,7 +807,7 @@ namespace CPF.Extend.Tools.Controls
                 {
                     case ScreenCutMouseType.DrawText:
                         y1 = vPoint.Y;
-                        //DrawText();
+                        DrawText();
                         break;
                     default:
                         Focus();
@@ -600,86 +816,85 @@ namespace CPF.Extend.Tools.Controls
             }
         }
 
-        //private void DrawText()
-        //{
-        //    if (pointStart.Value.X < rect.Right
-        //        &&
-        //        pointStart.Value.X > rect.Left
-        //        &&
-        //        pointStart.Value.Y > rect.Top
-        //        &&
-        //        pointStart.Value.Y < rect.Bottom)
-        //    {
-        //        var currentWAndX = pointStart.Value.X + 40;
-        //        if (textBorder == null)
-        //        {
-        //            textBorder = new Border
-        //            {
-        //                BorderBrush = _currentBrush == null ? Brushes.Red : _currentBrush,
-        //                BorderThickness = new Thickness(1),
-        //                Tag = _tag
-        //            };
+        private void DrawText()
+        {
+            if (pointStart.Value.X < rect.Right
+                &&
+                pointStart.Value.X > rect.Left
+                &&
+                pointStart.Value.Y > rect.Top
+                &&
+                pointStart.Value.Y < rect.Bottom)
+            {
+                var currentWAndX = pointStart.Value.X + 40;
+                if (textBorder == null)
+                {
+                    textBorder = new Border
+                    {
+                        BorderFill = _currentBrush == (ViewFill)Color.Empty ? (ViewFill)Color.Red : _currentBrush,
+                        BorderThickness = new Thickness(1),
+                        Tag = _tag
+                    };
 
-        //            var textBox = new TextBox();
-        //            textBox.Style = null;
-        //            textBox.Background = null;
-        //            textBox.BorderThickness = new Thickness(0);
-        //            textBox.Foreground = textBorder.BorderBrush;
-        //            textBox.FontFamily = DrawingContextHelper.FontFamily;
-        //            textBox.FontSize = 16;
-        //            textBox.TextWrapping = TextWrapping.Wrap;
-        //            textBox.FontWeight = FontWeights.Normal;
-        //            textBox.MinWidth = _width;
-        //            textBox.MaxWidth = rect.Right - pointStart.Value.X;
-        //            textBox.MaxHeight = rect.Height - 4;
-        //            textBox.Cursor = Cursors.Hand;
+                    var textBox = new TextBox();
+                    textBox.Background = null;
+                    textBox.BorderThickness = new Thickness(0);
+                    textBox.Foreground = textBorder.BorderFill;
+                    //textBox.FontFamily = DrawingContextHelper.FontFamily;
+                    textBox.FontSize = 16;
+                    textBox.WordWarp = true;
+                    textBox.FontStyle = FontStyles.Regular;
+                    //textBox.MinWidth = _width;
+                    textBox.MaxWidth = rect.Right - pointStart.Value.X;
+                    textBox.MaxHeight = rect.Height - 4;
+                    textBox.Cursor = Cursors.Hand;
 
-        //            textBox.Padding = new Thickness(4);
-        //            textBox.LostKeyboardFocus += (s, e1) =>
-        //            {
-        //                var tb = s as TextBox;
+                    textBox.Padding = new Thickness(4);
+                    //textBox.LostKeyboardFocus += (s, e1) =>
+                    //{
+                    //    var tb = s as TextBox;
 
-        //                var parent = VisualTreeHelper.GetParent(tb);
-        //                if (parent != null && parent is Border border)
-        //                {
-        //                    border.BorderThickness = new Thickness(0);
-        //                    if (string.IsNullOrWhiteSpace(tb.Text))
-        //                        _canvas.Children.Remove(border);
-        //                }
-        //            };
-        //            textBorder.SizeChanged += (s, e1) =>
-        //            {
-        //                var tb = s as Border;
-        //                var y = y1;
-        //                if (y + tb.ActualHeight > rect.Bottom)
-        //                {
-        //                    var v = Math.Abs(rect.Bottom - (y + tb.ActualHeight));
-        //                    y1 = y - v;
-        //                    Canvas.SetTop(tb, y1 + 2);
-        //                }
-        //            };
-        //            textBorder.PreviewMouseLeftButtonDown += (s, e) =>
-        //            {
-        //                _radioButtonText.IsChecked = true;
-        //                _radioButtonText_Click(null, null);
-        //                SelectElement();
-        //                var border = s as Border;
-        //                frameworkElement = border;
-        //                frameworkElement.Opacity = .7;
-        //                border.BorderThickness = new Thickness(1);
-        //            };
-        //            textBorder.Child = textBox;
-        //            _canvas.Children.Add(textBorder);
-        //            textBox.Focus();
-        //            var x = pointStart.Value.X;
+                    //    var parent = VisualTreeHelper.GetParent(tb);
+                    //    if (parent != null && parent is Border border)
+                    //    {
+                    //        border.BorderThickness = new Thickness(0);
+                    //        if (string.IsNullOrWhiteSpace(tb.Text))
+                    //            _canvas.Children.Remove(border);
+                    //    }
+                    //};
+                    //textBorder.SizeChanged += (s, e1) =>
+                    //{
+                    //    var tb = s as Border;
+                    //    var y = y1;
+                    //    if (y + tb.ActualHeight > rect.Bottom)
+                    //    {
+                    //        var v = Math.Abs(rect.Bottom - (y + tb.ActualHeight));
+                    //        y1 = y - v;
+                    //        Canvas.SetTop(tb, y1 + 2);
+                    //    }
+                    //};
+                    //textBorder.PreviewMouseLeftButtonDown += (s, e) =>
+                    //{
+                    //    _radioButtonText.IsChecked = true;
+                    //    _radioButtonText_Click(null, null);
+                    //    SelectElement();
+                    //    var border = s as Border;
+                    //    frameworkElement = border;
+                    //    frameworkElement.Opacity = .7;
+                    //    border.BorderThickness = new Thickness(1);
+                    //};
+                    textBorder.Child = textBox;
+                    _canvas.Children.Add(textBorder);
+                    textBox.Focus();
+                    var x = pointStart.Value.X;
 
-        //            if (currentWAndX > rect.Right)
-        //                x = x - (currentWAndX - rect.Right);
-        //            Canvas.SetLeft(textBorder, x - 2);
-        //            Canvas.SetTop(textBorder, pointStart.Value.Y - 2);
-        //        }
-        //    }
-        //}
+                    if (currentWAndX > rect.Right)
+                        x = x - (currentWAndX - rect.Right);
+                    textBorder.MarginLeft= x - 2;
+                    textBorder.MarginTop= pointStart.Value.Y - 2;
+                }
+            }
+        }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
@@ -700,16 +915,16 @@ namespace CPF.Extend.Tools.Controls
                     case ScreenCutMouseType.MoveMouse:
                         MoveRect(current);
                         break;
-                        //case ScreenCutMouseType.DrawRectangle:
-                        //case ScreenCutMouseType.DrawEllipse:
-                        //    DrawMultipleControl(current);
-                        //    break;
-                        //case ScreenCutMouseType.DrawArrow:
-                        //    DrawArrowControl(current);
-                        //    break;
-                        //case ScreenCutMouseType.DrawInk:
-                        //    DrwaInkControl(current);
-                        //    break;
+                    case ScreenCutMouseType.DrawRectangle:
+                    case ScreenCutMouseType.DrawEllipse:
+                        DrawMultipleControl(current);
+                        break;
+                    case ScreenCutMouseType.DrawArrow:
+                        DrawArrowControl(current);
+                        break;
+                    case ScreenCutMouseType.DrawInk:
+                        DrwaInkControl(current);
+                        break;
                 }
             }
         }
@@ -724,267 +939,267 @@ namespace CPF.Extend.Tools.Controls
                 return;
         }
 
-        //private void DrwaInkControl(Point current)
-        //{
-        //    CheckPoint(current);
-        //    if (current.X >= rect.Left
-        //        &&
-        //        current.X <= rect.Right
-        //        &&
-        //        current.Y >= rect.Top
-        //        &&
-        //        current.Y <= rect.Bottom)
-        //    {
-        //        if (polyLine == null)
-        //        {
-        //            polyLine = new Polyline();
-        //            polyLine.Stroke = _currentBrush == null ? Brushes.Red : _currentBrush;
-        //            polyLine.Cursor = Cursors.Hand;
-        //            polyLine.StrokeThickness = 3;
-        //            polyLine.StrokeLineJoin = PenLineJoin.Round;
-        //            polyLine.StrokeStartLineCap = PenLineCap.Round;
-        //            polyLine.StrokeEndLineCap = PenLineCap.Round;
-        //            polyLine.MouseLeftButtonDown += (s, e) =>
-        //            {
-        //                _radioButtonInk.IsChecked = true;
-        //                _radioButtonInk_Click(null, null);
-        //                SelectElement();
-        //                frameworkElement = s as Polyline;
-        //                frameworkElement.Opacity = .7;
-        //            };
-        //            _canvas.Children.Add(polyLine);
-        //        }
+        private void DrwaInkControl(Point current)
+        {
+            CheckPoint(current);
+            if (current.X >= rect.Left
+                &&
+                current.X <= rect.Right
+                &&
+                current.Y >= rect.Top
+                &&
+                current.Y <= rect.Bottom)
+            {
+                if (polyLine == null)
+                {
+                    polyLine = new Polyline();
+                    //polyLine.Stroke = _currentBrush == null ? Brushes.Red : _currentBrush;
+                    //polyLine.Cursor = Cursors.Hand;
+                    //polyLine.StrokeThickness = 3;
+                    //polyLine.StrokeLineJoin = PenLineJoin.Round;
+                    //polyLine.StrokeStartLineCap = PenLineCap.Round;
+                    //polyLine.StrokeEndLineCap = PenLineCap.Round;
+                    //polyLine.MouseLeftButtonDown += (s, e) =>
+                    //{
+                    //    _radioButtonInk.IsChecked = true;
+                    //    _radioButtonInk_Click(null, null);
+                    //    SelectElement();
+                    //    frameworkElement = s as Polyline;
+                    //    frameworkElement.Opacity = .7;
+                    //};
+                    _canvas.Children.Add(polyLine);
+                }
 
-        //        polyLine.Points.Add(current);
-        //    }
-        //}
+                polyLine.Points.Add(current);
+            }
+        }
 
-        //private void DrawArrowControl(Point current)
-        //{
-        //    CheckPoint(current);
-        //    if (screenCutMouseType != ScreenCutMouseType.DrawArrow)
-        //        return;
+        private void DrawArrowControl(Point current)
+        {
+            CheckPoint(current);
+            if (screenCutMouseType != ScreenCutMouseType.DrawArrow)
+                return;
 
-        //    if (pointStart is null)
-        //        return;
+            if (pointStart is null)
+                return;
 
-        //    var vPoint = pointStart.Value;
+            var vPoint = pointStart.Value;
 
-        //    var drawArrow = new Rect(vPoint, current);
-        //    if (controlArrow == null)
-        //    {
-        //        controlArrow = new Control();
-        //        controlArrow.Background = _currentBrush == null ? Brushes.Red : _currentBrush;
-        //        controlArrow.Template = controlTemplate;
-        //        controlArrow.Cursor = Cursors.Hand;
-        //        controlArrow.Tag = _tag;
-        //        controlArrow.MouseLeftButtonDown += (s, e) =>
-        //        {
-        //            _radioButtonArrow.IsChecked = true;
-        //            _radioButtonArrow_Click(null, null);
-        //            SelectElement();
-        //            frameworkElement = s as Control;
-        //            frameworkElement.Opacity = .7;
-        //        };
-        //        _canvas.Children.Add(controlArrow);
-        //        Canvas.SetLeft(controlArrow, drawArrow.Left);
-        //        Canvas.SetTop(controlArrow, drawArrow.Top - 7.5);
-        //    }
+            var drawArrow = new Rect(vPoint, current);
+            if (controlArrow == null)
+            {
+                controlArrow = new Control();
+                //controlArrow.Background = _currentBrush == null ? Brushes.Red : _currentBrush;
+                //controlArrow.Template = controlTemplate;
+                //controlArrow.Cursor = Cursors.Hand;
+                //controlArrow.Tag = _tag;
+                //controlArrow.MouseLeftButtonDown += (s, e) =>
+                //{
+                //    _radioButtonArrow.IsChecked = true;
+                //    _radioButtonArrow_Click(null, null);
+                //    SelectElement();
+                //    frameworkElement = s as Control;
+                //    frameworkElement.Opacity = .7;
+                //};
+                //_canvas.Children.Add(controlArrow);
+                //Canvas.SetLeft(controlArrow, drawArrow.Left);
+                //Canvas.SetTop(controlArrow, drawArrow.Top - 7.5);
+            }
 
-        //    var rotate = new RotateTransform();
-        //    var renderOrigin = new Point(0, .5);
-        //    controlArrow.RenderTransformOrigin = renderOrigin;
-        //    controlArrow.RenderTransform = rotate;
-        //    rotate.Angle = ControlsHelper.CalculeAngle(vPoint, current);
-        //    if (current.X < rect.Left
-        //        ||
-        //        current.X > rect.Right
-        //        ||
-        //        current.Y < rect.Top
-        //        ||
-        //        current.Y > rect.Bottom)
-        //    {
-        //        if (current.X >= vPoint.X && current.Y < vPoint.Y)
-        //        {
-        //            var a1 = (current.Y - vPoint.Y) / (current.X - vPoint.X);
-        //            var b1 = vPoint.Y - a1 * vPoint.X;
-        //            var xTop = (rect.Top - b1) / a1;
-        //            var yRight = a1 * rect.Right + b1;
+            var rotate = new RotateTransform();
+            //var renderOrigin = new Point(0, .5);
+            //controlArrow.RenderTransformOrigin = renderOrigin;
+            controlArrow.RenderTransform = rotate;
+            //rotate.Angle = ControlsHelper.CalculeAngle(vPoint, current);
+            if (current.X < rect.Left
+                ||
+                current.X > rect.Right
+                ||
+                current.Y < rect.Top
+                ||
+                current.Y > rect.Bottom)
+            {
+                if (current.X >= vPoint.X && current.Y < vPoint.Y)
+                {
+                    var a1 = (current.Y - vPoint.Y) / (current.X - vPoint.X);
+                    var b1 = vPoint.Y - a1 * vPoint.X;
+                    var xTop = (rect.Top - b1) / a1;
+                    var yRight = a1 * rect.Right + b1;
 
-        //            if (xTop <= rect.Right)
-        //            {
-        //                current.X = xTop;
-        //                current.Y = rect.Top;
-        //            }
-        //            else
-        //            {
-        //                current.X = rect.Right;
-        //                current.Y = yRight;
-        //            }
-        //        }
-        //        else if (current.X > vPoint.X && current.Y > vPoint.Y)
-        //        {
-        //            var a1 = (current.Y - vPoint.Y) / (current.X - vPoint.X);
-        //            var b1 = vPoint.Y - a1 * vPoint.X;
-        //            var xBottom = (rect.Bottom - b1) / a1;
-        //            var yRight = a1 * rect.Right + b1;
+                    if (xTop <= rect.Right)
+                    {
+                        current.X = xTop;
+                        current.Y = rect.Top;
+                    }
+                    else
+                    {
+                        current.X = rect.Right;
+                        current.Y = yRight;
+                    }
+                }
+                else if (current.X > vPoint.X && current.Y > vPoint.Y)
+                {
+                    var a1 = (current.Y - vPoint.Y) / (current.X - vPoint.X);
+                    var b1 = vPoint.Y - a1 * vPoint.X;
+                    var xBottom = (rect.Bottom - b1) / a1;
+                    var yRight = a1 * rect.Right + b1;
 
-        //            if (xBottom <= rect.Right)
-        //            {
-        //                current.X = xBottom;
-        //                current.Y = rect.Bottom;
-        //            }
-        //            else
-        //            {
-        //                current.X = rect.Right;
-        //                current.Y = yRight;
-        //            }
-        //        }
-        //        else if (current.X < vPoint.X && current.Y < vPoint.Y)
-        //        {
-        //            var a1 = (current.Y - vPoint.Y) / (current.X - vPoint.X);
-        //            var b1 = vPoint.Y - a1 * vPoint.X;
-        //            var xTop = (rect.Top - b1) / a1;
-        //            var yLeft = a1 * rect.Left + b1;
-        //            if (xTop >= rect.Left)
-        //            {
-        //                current.X = xTop;
-        //                current.Y = rect.Top;
-        //            }
-        //            else
-        //            {
-        //                current.X = rect.Left;
-        //                current.Y = yLeft;
-        //            }
-        //        }
-        //        else if (current.X < vPoint.X && current.Y > vPoint.Y)
-        //        {
-        //            var a1 = (current.Y - vPoint.Y) / (current.X - vPoint.X);
-        //            var b1 = vPoint.Y - a1 * vPoint.X;
-        //            var xBottom = (rect.Bottom - b1) / a1;
-        //            var yLeft = a1 * rect.Left + b1;
+                    if (xBottom <= rect.Right)
+                    {
+                        current.X = xBottom;
+                        current.Y = rect.Bottom;
+                    }
+                    else
+                    {
+                        current.X = rect.Right;
+                        current.Y = yRight;
+                    }
+                }
+                else if (current.X < vPoint.X && current.Y < vPoint.Y)
+                {
+                    var a1 = (current.Y - vPoint.Y) / (current.X - vPoint.X);
+                    var b1 = vPoint.Y - a1 * vPoint.X;
+                    var xTop = (rect.Top - b1) / a1;
+                    var yLeft = a1 * rect.Left + b1;
+                    if (xTop >= rect.Left)
+                    {
+                        current.X = xTop;
+                        current.Y = rect.Top;
+                    }
+                    else
+                    {
+                        current.X = rect.Left;
+                        current.Y = yLeft;
+                    }
+                }
+                else if (current.X < vPoint.X && current.Y > vPoint.Y)
+                {
+                    var a1 = (current.Y - vPoint.Y) / (current.X - vPoint.X);
+                    var b1 = vPoint.Y - a1 * vPoint.X;
+                    var xBottom = (rect.Bottom - b1) / a1;
+                    var yLeft = a1 * rect.Left + b1;
 
-        //            if (xBottom <= rect.Left)
-        //            {
-        //                current.X = rect.Left;
-        //                current.Y = yLeft;
-        //            }
-        //            else
-        //            {
-        //                current.X = xBottom;
-        //                current.Y = rect.Bottom;
-        //            }
-        //        }
-        //    }
+                    if (xBottom <= rect.Left)
+                    {
+                        current.X = rect.Left;
+                        current.Y = yLeft;
+                    }
+                    else
+                    {
+                        current.X = xBottom;
+                        current.Y = rect.Bottom;
+                    }
+                }
+            }
 
-        //    var x = current.X - vPoint.X;
-        //    var y = current.Y - vPoint.Y;
-        //    var width = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
-        //    width = width < 15 ? 15 : width;
-        //    controlArrow.Width = width;
-        //}
+            var x = current.X - vPoint.X;
+            var y = current.Y - vPoint.Y;
+            var width = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
+            width = width < 15 ? 15 : width;
+            controlArrow.Width = width;
+        }
 
-        //private void DrawMultipleControl(Point current)
-        //{
-        //    CheckPoint(current);
-        //    if (pointStart is null)
-        //        return;
+        private void DrawMultipleControl(Point current)
+        {
+            CheckPoint(current);
+            if (pointStart is null)
+                return;
 
-        //    var vPoint = pointStart.Value;
+            var vPoint = pointStart.Value;
 
-        //    var drawRect = new Rect(vPoint, current);
-        //    switch (screenCutMouseType)
-        //    {
-        //        case ScreenCutMouseType.DrawRectangle:
-        //            if (borderRectangle == null)
-        //            {
-        //                borderRectangle = new Border
-        //                {
-        //                    BorderBrush = _currentBrush == null ? Brushes.Red : _currentBrush,
-        //                    BorderThickness = new Thickness(3),
-        //                    CornerRadius = new CornerRadius(3),
-        //                    Tag = _tag,
-        //                    Cursor = Cursors.Hand
-        //                };
-        //                borderRectangle.MouseLeftButtonDown += (s, e) =>
-        //                {
-        //                    _radioButtonRectangle.IsChecked = true;
-        //                    _radioButtonRectangle_Click(null, null);
-        //                    SelectElement();
-        //                    frameworkElement = s as Border;
-        //                    frameworkElement.Opacity = .7;
-        //                };
-        //                _canvas.Children.Add(borderRectangle);
-        //            }
+            var drawRect = new Rect(vPoint, current);
+            switch (screenCutMouseType)
+            {
+                case ScreenCutMouseType.DrawRectangle:
+                    //if (borderRectangle == null)
+                    //{
+                    //    borderRectangle = new Border
+                    //    {
+                    //        BorderBrush = _currentBrush == null ? Brushes.Red : _currentBrush,
+                    //        BorderThickness = new Thickness(3),
+                    //        CornerRadius = new CornerRadius(3),
+                    //        Tag = _tag,
+                    //        Cursor = Cursors.Hand
+                    //    };
+                    //    borderRectangle.MouseLeftButtonDown += (s, e) =>
+                    //    {
+                    //        _radioButtonRectangle.IsChecked = true;
+                    //        _radioButtonRectangle_Click(null, null);
+                    //        SelectElement();
+                    //        frameworkElement = s as Border;
+                    //        frameworkElement.Opacity = .7;
+                    //    };
+                    //    _canvas.Children.Add(borderRectangle);
+                    //}
 
-        //            break;
-        //        case ScreenCutMouseType.DrawEllipse:
-        //            if (drawEllipse == null)
-        //            {
-        //                drawEllipse = new Ellipse
-        //                {
-        //                    Stroke = _currentBrush == null ? Brushes.Red : _currentBrush,
-        //                    StrokeThickness = 3,
-        //                    Tag = _tag,
-        //                    Cursor = Cursors.Hand
-        //                };
-        //                drawEllipse.MouseLeftButtonDown += (s, e) =>
-        //                {
-        //                    _radioButtonEllipse.IsChecked = true;
-        //                    _radioButtonEllipse_Click(null, null);
-        //                    SelectElement();
-        //                    frameworkElement = s as Ellipse;
-        //                    frameworkElement.Opacity = .7;
-        //                };
-        //                _canvas.Children.Add(drawEllipse);
-        //            }
+                    break;
+                case ScreenCutMouseType.DrawEllipse:
+                    //if (drawEllipse == null)
+                    //{
+                    //    drawEllipse = new Ellipse
+                    //    {
+                    //        Stroke = _currentBrush == null ? Brushes.Red : _currentBrush,
+                    //        StrokeThickness = 3,
+                    //        Tag = _tag,
+                    //        Cursor = Cursors.Hand
+                    //    };
+                    //    drawEllipse.MouseLeftButtonDown += (s, e) =>
+                    //    {
+                    //        _radioButtonEllipse.IsChecked = true;
+                    //        _radioButtonEllipse_Click(null, null);
+                    //        SelectElement();
+                    //        frameworkElement = s as Ellipse;
+                    //        frameworkElement.Opacity = .7;
+                    //    };
+                    //    _canvas.Children.Add(drawEllipse);
+                    //}
 
-        //            break;
-        //    }
+                    break;
+            }
 
-        //    var _borderLeft = drawRect.Left - Canvas.GetLeft(_border);
+            //var _borderLeft = drawRect.Left - Canvas.GetLeft(_border);
 
-        //    if (_borderLeft < 0)
-        //        _borderLeft = Math.Abs(_borderLeft);
-        //    if (drawRect.Width + _borderLeft < _border.ActualWidth)
-        //    {
-        //        var wLeft = Canvas.GetLeft(_border) + _border.ActualWidth;
-        //        var left = drawRect.Left < Canvas.GetLeft(_border) ? Canvas.GetLeft(_border) :
-        //            drawRect.Left > wLeft ? wLeft : drawRect.Left;
-        //        if (borderRectangle != null)
-        //        {
-        //            borderRectangle.Width = drawRect.Width;
-        //            Canvas.SetLeft(borderRectangle, left);
-        //        }
+            //if (_borderLeft < 0)
+            //    _borderLeft = Math.Abs(_borderLeft);
+            //if (drawRect.Width + _borderLeft < _border.ActualWidth)
+            //{
+            //    var wLeft = Canvas.GetLeft(_border) + _border.ActualWidth;
+            //    var left = drawRect.Left < Canvas.GetLeft(_border) ? Canvas.GetLeft(_border) :
+            //        drawRect.Left > wLeft ? wLeft : drawRect.Left;
+            //    if (borderRectangle != null)
+            //    {
+            //        borderRectangle.Width = drawRect.Width;
+            //        Canvas.SetLeft(borderRectangle, left);
+            //    }
 
-        //        if (drawEllipse != null)
-        //        {
-        //            drawEllipse.Width = drawRect.Width;
-        //            Canvas.SetLeft(drawEllipse, left);
-        //        }
-        //    }
+            //    if (drawEllipse != null)
+            //    {
+            //        drawEllipse.Width = drawRect.Width;
+            //        Canvas.SetLeft(drawEllipse, left);
+            //    }
+            //}
 
-        //    var _borderTop = drawRect.Top - Canvas.GetTop(_border);
-        //    if (_borderTop < 0)
-        //        _borderTop = Math.Abs(_borderTop);
-        //    if (drawRect.Height + _borderTop < _border.ActualHeight)
-        //    {
-        //        var hTop = Canvas.GetTop(_border) + _border.Height;
-        //        var top = drawRect.Top < Canvas.GetTop(_border) ? Canvas.GetTop(_border) :
-        //            drawRect.Top > hTop ? hTop : drawRect.Top;
-        //        if (borderRectangle != null)
-        //        {
-        //            borderRectangle.Height = drawRect.Height;
-        //            Canvas.SetTop(borderRectangle, top);
-        //        }
+            //var _borderTop = drawRect.Top - Canvas.GetTop(_border);
+            //if (_borderTop < 0)
+            //    _borderTop = Math.Abs(_borderTop);
+            //if (drawRect.Height + _borderTop < _border.ActualHeight)
+            //{
+            //    var hTop = Canvas.GetTop(_border) + _border.Height;
+            //    var top = drawRect.Top < Canvas.GetTop(_border) ? Canvas.GetTop(_border) :
+            //        drawRect.Top > hTop ? hTop : drawRect.Top;
+            //    if (borderRectangle != null)
+            //    {
+            //        borderRectangle.Height = drawRect.Height;
+            //        Canvas.SetTop(borderRectangle, top);
+            //    }
 
-        //        if (drawEllipse != null)
-        //        {
-        //            drawEllipse.Height = drawRect.Height;
-        //            Canvas.SetTop(drawEllipse, top);
-        //        }
-        //    }
-        //}
+            //    if (drawEllipse != null)
+            //    {
+            //        drawEllipse.Height = drawRect.Height;
+            //        Canvas.SetTop(drawEllipse, top);
+            //    }
+            //}
+        }
 
         private void SelectElement()
         {
@@ -1060,18 +1275,18 @@ namespace CPF.Extend.Tools.Controls
                     if (screenCutMouseType == ScreenCutMouseType.MoveMouse)
                         EditBarPosition();
 
-                    //if (_radioButtonRectangle.IsChecked != true
-                    //    &&
-                    //    _radioButtonEllipse.IsChecked != true
-                    //    &&
-                    //    _radioButtonArrow.IsChecked != true
-                    //    &&
-                    //    _radioButtonText.IsChecked != true
-                    //    &&
-                    //    _radioButtonInk.IsChecked != true)
-                    screenCutMouseType = ScreenCutMouseType.Default;
-                    //else
-                    //    DisposeControl();
+                    if (_radioButtonRectangle.IsChecked != true
+                        &&
+                        _radioButtonEllipse.IsChecked != true
+                        &&
+                        _radioButtonArrow.IsChecked != true
+                        &&
+                        _radioButtonText.IsChecked != true
+                        &&
+                        _radioButtonInk.IsChecked != true)
+                        screenCutMouseType = ScreenCutMouseType.Default;
+                    else
+                        DisposeControl();
                 }
             }
         }
