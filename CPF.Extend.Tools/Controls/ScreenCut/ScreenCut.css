@@ -1,3 +1,47 @@
 ﻿.el-radio-group RadioButton #markPanel {
     Visibility: Collapsed;
 }
+
+.radio-red #radioButtonBorder {
+    StrokeFill: #ff0000;
+    StrokeStyle: 2;
+    Fill: #ff0000;
+}
+
+.radio-red[IsChecked=true] #optionMark {
+    StrokeFill: #EFFCE9;
+    Fill: #EFFCE9;
+}
+
+.radio-DodgerBlue #radioButtonBorder {
+    StrokeFill: #0026ff;
+    StrokeStyle: 2;
+    Fill: #0026ff;
+}
+
+.radio-DodgerBlue[IsChecked=true] #optionMark {
+    StrokeFill: #EFFCE9;
+    Fill: #EFFCE9;
+}
+
+.radio-LimeGreen #radioButtonBorder {
+    StrokeFill: #00ff21;
+    StrokeStyle: 2;
+    Fill: #00ff21;
+}
+
+.radio-LimeGreen[IsChecked=true] #optionMark {
+    StrokeFill: #EFFCE9;
+    Fill: #EFFCE9;
+}
+
+.radio-Yellow #radioButtonBorder {
+    StrokeFill: #ffd800;
+    StrokeStyle: 2;
+    Fill: #ffd800;
+}
+
+.radio-Yellow[IsChecked=true] #optionMark {
+    StrokeFill: #EFFCE9;
+    Fill: #EFFCE9;
+}

@@ -363,58 +363,46 @@ namespace CPF.Extend.Tools.Controls
             };
             _popupBorder = new Border
             {
-                MarginTop = 10,
+                MarginTop = 9,
                 PresenterFor = this,
                 Name = "EditBar",
-                Background = null,
+                Background = "#EFFCE9",
+                BorderFill=null,
                 CornerRadius = new CornerRadius(12),
                 Child = new WrapPanel
                 {
-                    MarginTop=10,
-                    Children=
+                    MarginTop=4,
+                    MarginBottom = 4,
+                    Children =
                     {
                         new RadioButton
                         {
+                            Classes="radio-red",
                             Margin="4,0,4,0",
                             IsChecked=true,
-                            Content=new Ellipse
-                            {
-                                Fill=Color.Red,
-                            }
+                           
                         },
                         new RadioButton
                         {
+                            Classes="radio-DodgerBlue",
                             Margin="4,0,4,0",
-                            IsChecked=true,
-                            Content=new Ellipse
-                            {
-                                Fill=Color.Red,
-                            }
                         },
                         new RadioButton
                         {
+                            Classes="radio-LimeGreen",
                             Margin="4,0,4,0",
-                            IsChecked=true,
-                            Content=new Ellipse
-                            {
-                                Fill=Color.Red,
-                            }
                         },
                         new RadioButton
                         {
+                            Classes="radio-Yellow",
                             Margin="4,0,4,0",
-                            IsChecked=true,
-                            Content=new Ellipse
-                            {
-                                Fill=Color.Red,
-                            }
                         }
-                    },
-                    Classes="el-radio-group"
+                    }
                 }
             };
             _popup.Children.Add(new Path
             {
+                StrokeFill=null,
                 Width = 10,
                 MarginTop = 0,
                 Data = "M768 716.8h-512l256-460.8 256 460.8z",
@@ -423,6 +411,7 @@ namespace CPF.Extend.Tools.Controls
             });
             _popup.Children.Add(_popupBorder);
             LoadStyleFile("res://CPF.Extend.Tools/Controls/ScreenCut/ScreenCut.css");
+            _popup.LoadStyle(this);
         }
 
         /// <summary>
@@ -485,88 +474,6 @@ namespace CPF.Extend.Tools.Controls
                 _radioButtonText.Unchecked += _radioButtonText_Unchecked;
             }
         }
-
-        //public override void OnApplyTemplate()
-        //{
-        //    base.OnApplyTemplate();
-        //    _canvas = GetTemplateChild(CanvasTemplateName) as Canvas;
-        //    _rectangleLeft = GetTemplateChild(RectangleLeftTemplateName) as Rectangle;
-        //    _rectangleTop = GetTemplateChild(RectangleTopTemplateName) as Rectangle;
-        //    _rectangleRight = GetTemplateChild(RectangleRightTemplateName) as Rectangle;
-        //    _rectangleBottom = GetTemplateChild(RectangleBottomTemplateName) as Rectangle;
-        //    _border = GetTemplateChild(BorderTemplateName) as Border;
-        //    _border.MouseLeftButtonDown += _border_MouseLeftButtonDown;
-
-        //    _editBar = GetTemplateChild(EditBarTemplateName) as Border;
-        //    _buttonSave = GetTemplateChild(ButtonSaveTemplateName) as Button;
-        //    if (_buttonSave != null)
-        //        _buttonSave.Click += _buttonSave_Click;
-        //    _buttonCancel = GetTemplateChild(ButtonCancelTemplateName) as Button;
-        //    if (_buttonCancel != null)
-        //        _buttonCancel.Click += _buttonCancel_Click;
-        //    _buttonComplete = GetTemplateChild(ButtonCompleteTemplateName) as Button;
-        //    if (_buttonComplete != null)
-        //        _buttonComplete.Click += _buttonComplete_Click;
-        //    _radioButtonRectangle = GetTemplateChild(RadioButtonRectangleTemplateName) as RadioButton;
-        //    if (_radioButtonRectangle != null)
-        //        _radioButtonRectangle.Click += _radioButtonRectangle_Click;
-        //    _radioButtonEllipse = GetTemplateChild(RadioButtonEllipseTemplateName) as RadioButton;
-        //    if (_radioButtonEllipse != null)
-        //        _radioButtonEllipse.Click += _radioButtonEllipse_Click;
-        //    _radioButtonArrow = GetTemplateChild(RadioButtonArrowTemplateName) as RadioButton;
-        //    if (_radioButtonArrow != null)
-        //        _radioButtonArrow.Click += _radioButtonArrow_Click;
-        //    _radioButtonInk = GetTemplateChild(RadioButtonInkTemplateName) as RadioButton;
-        //    if (_radioButtonInk != null)
-        //        _radioButtonInk.Click += _radioButtonInk_Click;
-        //    _radioButtonText = GetTemplateChild(RadioButtonTextTemplateName) as RadioButton;
-        //    if (_radioButtonText != null)
-        //        _radioButtonText.Click += _radioButtonText_Click;
-        //    _canvas.Width = Screen.AllScreens[ScreenIndex].Bounds.Width;
-        //    _canvas.Height = Screen.AllScreens[ScreenIndex].Bounds.Height;
-        //    //_canvas.Background = new ImageBrush(ControlsHelper.Capture());
-        //    _canvas.Background = new ImageBrush(ConvertBitmap(CopyScreen()));
-        //_rectangleLeft.Width = _canvas.Width;
-        //    _rectangleLeft.Height = _canvas.Height;
-        //    _border.Opacity = 0;
-        //    _popup = GetTemplateChild(PopupTemplateName) as Popup;
-        //    _popupBorder = GetTemplateChild(PopupBorderTemplateName) as Border;
-        //    _popupBorder.Loaded += (s, e) => { _popup.HorizontalOffset = -_popupBorder.ActualWidth / 3; };
-        //    _wrapPanel = GetTemplateChild(WrapPanelColorTemplateName) as WrapPanel;
-        //    _wrapPanel.PreviewMouseDown += _wrapPanel_PreviewMouseDown;
-        //    controlTemplate = (ControlTemplate)FindResource("WD.PART_DrawArrow");
-        //}
-        //public static BitmapSource BitmapSourceFromBrush(Brush drawingBrush, int x = 32, int y = 32, int dpi = 96)
-        //{
-        //    // RenderTargetBitmap = builds a bitmap rendering of a visual
-        //    var pixelFormat = PixelFormats.Pbgra32;
-        //    RenderTargetBitmap rtb = new RenderTargetBitmap(x, y, dpi, dpi, pixelFormat);
-
-        //    // Drawing visual allows us to compose graphic drawing parts into a visual to render
-        //    var drawingVisual = new DrawingVisual();
-        //    using (DrawingContext context = drawingVisual.RenderOpen())
-        //    {
-        //        // Declaring drawing a rectangle using the input brush to fill up the visual
-        //        context.DrawRectangle(drawingBrush, null, new Rect(0, 0, x, y));
-        //    }
-
-        //    // Actually rendering the bitmap
-        //    rtb.Render(drawingVisual);
-        //    return rtb;
-        //}
-
-        //private BitmapSource ConvertBitmap(Bitmap bitmap)
-        //{
-        //    BitmapSource img;
-        //    IntPtr hBitmap;
-        //    hBitmap = bitmap.GetHbitmap();
-        //    img = Imaging.CreateBitmapSourceFromHBitmap(
-        //        hBitmap,
-        //        IntPtr.Zero,
-        //        Int32Rect.Empty,
-        //        BitmapSizeOptions.FromEmptyOptions());
-        //    return img;
-        //}
 
         private ScreenDPI GetScreenDPI(int screenIndex)
         {
@@ -1268,7 +1175,7 @@ namespace CPF.Extend.Tools.Controls
 
                 _border.MarginLeft= left;
                 _border.MarginTop= top;
-                rect = new Rect(new Point(left, top), new Point(left + _border.ActualSize.Width, top + _border.ActualSize.Height));
+                rect = new Rect(left, top,  _border.ActualSize.Width,  _border.ActualSize.Height);
                 _rectangleLeft.Height = _canvas.ActualSize.Height;
                 _rectangleLeft.Width = left <= 0 ? 0 : left >= _canvas.ActualSize.Width ? _canvas.ActualSize.Width : left;
 
