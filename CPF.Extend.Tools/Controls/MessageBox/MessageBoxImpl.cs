@@ -248,11 +248,10 @@ namespace CPF.Extend.Tools.Controls.MessageBox
                 _buttonOK.Visibility = _okVisibility;
                 _buttonOK.Click += _buttonOK_Click;
             }
-            //0.9.6.7版本需要
-            //LayoutManager.ExecuteLayoutPass();
+            LayoutManager.ExecuteLayoutPass();
             int leftDeviceUnits = this.Position.X;
             int topDeviceUnits = this.Position.Y;
-            Size currentSizeDeviceUnits = this.ActualSize;
+            Size currentSizeDeviceUnits = this.ActualSize * this.RenderScaling;
             if ((CalculateWindowLocation(ref leftDeviceUnits, ref topDeviceUnits, currentSizeDeviceUnits)) && WindowState == WindowState.Normal)
             {
                 this.Position = new PixelPoint(leftDeviceUnits, topDeviceUnits);
@@ -278,7 +277,7 @@ namespace CPF.Extend.Tools.Controls.MessageBox
                             goto case WindowStartupLocation.CenterScreen;
                         }
 
-                        Size windowSize = Owner.ActualSize;
+                        Size windowSize = Owner.ActualSize* Owner.RenderScaling;
                         PixelPoint point = new PixelPoint((int)windowSize.Width, (int)windowSize.Height);
 
 

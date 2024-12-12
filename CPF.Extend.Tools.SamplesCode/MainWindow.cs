@@ -17,7 +17,7 @@ namespace CPF.Extend.Tools.SamplesCode
         protected override void InitializeComponent()
         {
             Title = "示例";
-            Width = 500;
+            Width = 600;
             Height = 400;
             Background = null;
             Children.Add(new WindowFrame(this, new Panel
