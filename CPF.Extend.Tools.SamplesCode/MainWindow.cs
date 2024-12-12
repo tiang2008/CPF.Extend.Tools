@@ -1,5 +1,6 @@
 ﻿using CPF.Controls;
 using CPF.Extend.Tools.Controls.MessageBox;
+using CPF.Extend.Tools.Controls.Page;
 using CPF.Extend.Tools.Controls.ScreenCapturer;
 using MessageBox = CPF.Extend.Tools.Controls.MessageBox.MessageBox;
 
@@ -115,6 +116,16 @@ namespace CPF.Extend.Tools.SamplesCode
 
                                             }
                                         }
+                                    }
+                                }
+                            },
+                            new TabItem
+                            {
+                                Header="分页",
+                                Content=new Panel
+                                {
+                                    Children={
+                                        new PageControl()
                                     }
                                 }
                             }

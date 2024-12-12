@@ -248,8 +248,8 @@ namespace CPF.Extend.Tools.Controls.MessageBox
                 _buttonOK.Visibility = _okVisibility;
                 _buttonOK.Click += _buttonOK_Click;
             }
-
-            LayoutManager.ExecuteLayoutPass();
+            //0.9.6.7版本需要
+            //LayoutManager.ExecuteLayoutPass();
             int leftDeviceUnits = this.Position.X;
             int topDeviceUnits = this.Position.Y;
             Size currentSizeDeviceUnits = this.ActualSize;
